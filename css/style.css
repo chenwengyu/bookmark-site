@@ -1,0 +1,422 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    line-height: 1.6;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* 头部样式 */
+header {
+    text-align: center;
+    padding: 60px 0;
+    background: linear-gradient(135deg, #2d2d6e, #3a4c7a, #2a7a75);
+    color: white;
+    border-radius: 12px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+}
+
+header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+header p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.9;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+/* 导航栏样式 */
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: relative;
+}
+
+.nav-tabs::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(127, 127, 213, 0.3), transparent);
+}
+
+.nav-tab {
+    padding: 12px 24px;
+    background-color: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-weight: 500;
+    color: #aaa;
+    font-size: 0.95rem;
+    position: relative;
+}
+
+.nav-tab:hover {
+    background-color: #2a2a2a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.nav-tab.active {
+    background-color: #3a3a8e;
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 6px 20px rgba(58, 58, 142, 0.3);
+}
+
+/* 内容区域样式 */
+.content-section {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    position: relative;
+}
+
+/* 学习阶段标识 */
+.stage-indicator {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background-color: #3a3a8e;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+}
+
+.stage-description {
+    margin-bottom: 25px;
+    padding: 15px 20px;
+    background-color: rgba(58, 58, 142, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid #3a3a8e;
+    color: #b0b0b0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.stage-indicator::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #5cdb7b;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.stage-indicator.intermediate::before {
+    background-color: #ffd54f;
+}
+
+.stage-indicator.advanced::before {
+    background-color: #ff6b6b;
+}
+
+.content-section.active {
+    display: block;
+    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.content-section.active .resource-card {
+    animation: cardFadeIn 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 资源卡片样式 */
+.resources {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    position: relative;
+}
+
+/* 学习路径连接线 */
+.resources::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(to bottom, transparent, rgba(127, 127, 213, 0.3), rgba(127, 127, 213, 0.5), rgba(127, 127, 213, 0.3), transparent);
+    z-index: 0;
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .resources::before {
+        left: 30px;
+    }
+}
+
+.resource-card {
+    background-color: #1e1e1e;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* 资源卡片序号标识 */
+.resource-card::after {
+    content: attr(data-step);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #3a3a8e;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    opacity: 0.8;
+    z-index: 2;
+}
+
+.resource-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #3a3a8e, #4a6ca0);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.resource-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    background-color: #252525;
+}
+
+.resource-card:hover::before {
+    opacity: 1;
+}
+
+.resource-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.resource-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+}
+
+.resource-rating {
+    background-color: rgba(127, 127, 213, 0.15);
+    color: #a0a0ff;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    transition: all 0.3s ease;
+}
+
+.resource-rating.high {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #5cdb7b;
+}
+
+.resource-rating.medium {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #ffd54f;
+}
+
+.resource-rating.low {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #ff6b6b;
+}
+
+.resource-link {
+    display: block;
+    margin: 14px 0;
+    color: #a0a0ff;
+    text-decoration: none;
+    word-break: break-all;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    padding: 8px 0;
+}
+
+.resource-link:hover {
+    color: #c4c4ff;
+    transform: translateX(4px);
+}
+
+.resource-content {
+    margin-bottom: 24px;
+    line-height: 1.7;
+}
+
+.resource-content p {
+    margin-bottom: 12px;
+    color: #b0b0b0;
+}
+
+.resource-content strong {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.resource-comment {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    font-style: italic;
+    color: #9e9e9e;
+    line-height: 1.7;
+    position: relative;
+    margin-top: 10px;
+}
+
+.resource-comment::before {
+    content: '"';
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.1);
+    font-family: Georgia, serif;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px 16px;
+    }
+    
+    .resources {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    header {
+        padding: 40px 20px;
+        margin-bottom: 40px;
+        border-radius: 10px;
+    }
+    
+    header h1 {
+        font-size: 2.2rem;
+    }
+    
+    header p {
+        font-size: 1.05rem;
+    }
+    
+    .nav-tabs {
+        margin-bottom: 40px;
+    }
+    
+    .nav-tabs::after {
+        width: 90%;
+        bottom: -15px;
+    }
+    
+    .nav-tab {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        flex: 1 0 auto;
+        text-align: center;
+    }
+    
+    .resource-card {
+        padding: 24px;
+        border-radius: 12px;
+    }
+    
+    .resource-title {
+        font-size: 1.2rem;
+    }
+    
+    .resource-comment {
+        padding: 16px;
+    }
+}
