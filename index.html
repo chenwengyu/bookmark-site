@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>区块链学习导航站</title>
+  <style>
+    :root {
+      --primary: #3498db;
+      --secondary: #2ecc71;
+      --dark: #2c3e50;
+      --light: #ecf0f1;
+      --warning: #e67e22;
+      --danger: #e74c3c;
+      --success: #27ae60;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f8fa;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary), #9b59b6);
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .learning-path {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    
+    .path-item {
+      background-color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .path-item:nth-child(1) { background-color: var(--primary); }
+    .path-item:nth-child(2) { background-color: #9b59b6; }
+    .path-item:nth-child(3) { background-color: var(--warning); }
+    .path-item:nth-child(4) { background-color: var(--danger); }
+    .path-item:nth-child(5) { background-color: var(--success); }
+    
+    .path-line {
+      position: absolute;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--success));
+      top: 25px;
+      left: 10%;
+      right: 10%;
+      z-index: 1;
+    }
+    
+    .topic-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    
+    .topic {
+      flex: 1;
+      min-width: 300px;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .topic:hover {
+      transform: translateY(-5px);
+    }
+    
+    .topic-header {
+      padding: 15px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .topic:nth-child(1) .topic-header { background-color: var(--primary); }
+    .topic:nth-child(2) .topic-header { background-color: #9b59b6; }
+    .topic:nth-child(3) .topic-header { background-color: var(--warning); }
+    .topic:nth-child(4) .topic-header { background-color: var(--danger); }
+    .topic:nth-child(5) .topic-header { background-color: var(--success); }
+    
+    .topic-content {
+      padding: 20px;
+    }
+    
+    .resource {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .resource:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    
+    .resource-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .resource-type {
+      font-weight: bold;
+      color: var(--dark);
+    }
+    
+    .rating {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 20px;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .rating-100 { background-color: var(--success); }
+    .rating-90 { background-color: #2ecc71; }
+    .rating-80 { background-color: #27ae60; }
+    .rating-70 { background-color: var(--warning); }
+    .rating-60 { background-color: #f39c12; }
+    .rating-50 { background-color: #e67e22; }
+    .rating-40 { background-color: var(--danger); }
+    
+    .resource-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .resource-link {
+      display: inline-block;
+      color: var(--primary);
+      text-decoration: none;
+      margin-bottom: 5px;
+    }
+    
+    .resource-link:hover {
+      text-decoration: underline;
+    }
+    
+    .resource-content {
+      color: #555;
+      font-size: 0.95rem;
+    }
+    
+    .resource-comment {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-left: 3px solid #ddd;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      color: #777;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .topic {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>区块链学习导航站</h1>
+      <p class="subtitle">从基础到高级的区块链技术学习路径 🚀</p>
+    </header>
+    
+    <div style="position: relative; margin-bottom: 60px;">
+      <div class="path-line"></div>
+      <div class="learning-path">
+        <div class="path-item">1</div>
+        <div class="path-item">2</div>
+        <div class="path-item">3</div>
+        <div class="path-item">4</div>
+        <div class="path-item">5</div>
+      </div>
+      <div class="learning-path" style="justify-content: space-between; margin-top: 10px;">
+        <div style="text-align: center; width: 100px;">区块链基础</div>
+        <div style="text-align: center; width: 100px;">以太坊与智能合约</div>
+        <div style="text-align: center; width: 100px;">NFT生态</div>
+        <div style="text-align: center; width: 100px;">DeFi技术</div>
+        <div style="text-align: center; width: 100px;">Web3开发</div>
+      </div>
+    </div>
+    
+    <div class="topic-container">
+      <!-- 区块链基础知识 -->
+      <div class="topic">
+        <div class="topic-header">区块链基础知识</div>
+        <div class="topic-content">
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">原始文献</div>
+              <div class="rating rating-100">100分</div>
+            </div>
+            <div class="resource-name">Bitcoin White Paper</div>
+            <a href="https://bitcoin.org/en/bitcoin-paper" target="_blank" class="resource-link">https://bitcoin.org/en/bitcoin-paper</a>
+            <div class="resource-content">学习内容: 比特币底层设计</div>
+            <div class="resource-comment">上MIT课的时候，听老师讲了一遍，之后又自己再看了一遍。感觉还没有完全懂，后续值得再读</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">视频教程</div>
+              <div class="rating rating-90">90分</div>
+            </div>
+            <div class="resource-name">MIT 区块链课程 (15.S12)</div>
+            <a href="https://ocw.mit.edu/courses/15-s12-blockchain-and-money-fall-2018/video_galleries/video-lectures/" target="_blank" class="resource-link">https://ocw.mit.edu/courses/15-s12-blockchain-and-money-fall-2018/video_galleries/video-lectures/</a>
+            <div class="resource-content">学习范围: Session1-Session5 (传统金融、区块链技术、相关加密算法)</div>
+            <div class="resource-comment">是非常好的区块链入门课程，老师讲课的节奏慢且课程易懂。密码学部分讲的不多，只说了区块链中用到的密码学技术。前两节涉及货币，金融方面的知识，第三节到第五节在谈区块链技术，主要围绕bitcoin白皮书展开讲解。</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">电子书籍</div>
+              <div class="rating rating-70">70分</div>
+            </div>
+            <div class="resource-name">《精通以太坊》</div>
+            <a href="https://github.com/inoutcode/ethereum_book" target="_blank" class="resource-link">https://github.com/inoutcode/ethereum_book</a>
+            <div class="resource-content">学习范围: 一、二、五章 (以太坊基础概念)</div>
+            <div class="resource-comment">这几章讲的很浅，基本是概念介绍，比较适合小白读</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 以太坊和智能合约 -->
+      <div class="topic">
+        <div class="topic-header">以太坊和智能合约</div>
+        <div class="topic-content">
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">官方文档</div>
+              <div class="rating rating-80">80分</div>
+            </div>
+            <div class="resource-name">以太坊官方文档</div>
+            <a href="https://ethereum.org/en/developers/docs/" target="_blank" class="resource-link">https://ethereum.org/en/developers/docs/</a>
+            <div class="resource-content">学习内容: 区块链、智能合约相关的基础概念，ERC20</div>
+            <div class="resource-comment">官方文档基本翻完了，介绍的内容比较浅，解释了很多概念。想入门的小白可以去看看。</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">专业书籍</div>
+              <div class="rating rating-60">60分</div>
+            </div>
+            <div class="resource-name">《精通以太坊》第八章(智能合约)</div>
+            <a href="https://github.com/inoutcode/ethereum_book" target="_blank" class="resource-link">https://github.com/inoutcode/ethereum_book</a>
+            <div class="resource-content">学习内容: 智能合约概念与Solidity开发</div>
+            <div class="resource-comment">概念部分比官网讲的好一点，偏总结性；也有solidity开发部分内容，但我没试过，感觉对小白来说有点复杂</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">互动学习平台</div>
+              <div class="rating rating-50">55分</div>
+            </div>
+            <div class="resource-name">CryptoZombies</div>
+            <a href="https://cryptozombies.io/zh/course/" target="_blank" class="resource-link">https://cryptozombies.io/zh/course/</a>
+            <div class="resource-content">学习内容: Solidity智能合约编程（游戏化教学）</div>
+            <div class="resource-comment">一开始觉得还挺有趣的，但刷到后面感觉不太行，学的内容比较零散和片面，入门还行，但无法深入领会solidity各种语法特性和编程风格等</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- NFT生态与智能合约 -->
+      <div class="topic">
+        <div class="topic-header">NFT生态与智能合约</div>
+        <div class="topic-content">
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">开发工具</div>
+              <div class="rating rating-100">100分</div>
+            </div>
+            <div class="resource-name">Remix, Hardhat, OpenZeppelin</div>
+            <a href="https://remix.ethereum.org/" target="_blank" class="resource-link">https://remix.ethereum.org/</a>
+            <a href="https://hardhat.org/tutorial/creating-a-new-hardhat-project" target="_blank" class="resource-link">https://hardhat.org/tutorial/creating-a-new-hardhat-project</a>
+            <a href="https://docs.openzeppelin.com/contracts/4.x/api/token/erc721" target="_blank" class="resource-link">https://docs.openzeppelin.com/contracts/4.x/api/token/erc721</a>
+            <div class="resource-content">学习内容: 智能合约开发工具</div>
+            <div class="resource-comment">Remix是一个在线的智能合约编译器，Hardhat是本地的智能合约开发环境，这周把常用的工具都熟悉了一下，从测试到编译到运行。OpenZeppelin上有许多智能合约开发常用的API，这周也了解了一遍，但学习还比较浅，毕竟还在入门阶段，之后慢慢熟悉这些生产工具</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">视频教程</div>
+              <div class="rating rating-90">90分</div>
+            </div>
+            <div class="resource-name">Smart Contract Programmer</div>
+            <a href="https://www.youtube.com/watch?v=xv9OmztShIw&list=PLO5VPQH6OWdVQwpQfw9rZ67O6Pjfo6q-p" target="_blank" class="resource-link">https://www.youtube.com/watch?v=xv9OmztShIw&list=PLO5VPQH6OWdVQwpQfw9rZ67O6Pjfo6q-p</a>
+            <div class="resource-content">学习内容: 智能合约开发部分</div>
+            <div class="resource-comment">看到别人推荐这个up主，就去看了看，发现他的视频讲的极好，易懂且不拖延，能让人跟着一起高效学习编程。我一般很嫌弃这种编程视频课，但他的视频真的不错</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">基础文档</div>
+              <div class="rating rating-80">80分</div>
+            </div>
+            <div class="resource-name">以太坊官方文档 & OpenZeppelin官网</div>
+            <a href="https://ethereum.org/en/developers/docs/" target="_blank" class="resource-link">https://ethereum.org/en/developers/docs/</a>
+            <a href="https://docs.openzeppelin.com/contracts/4.x/erc721" target="_blank" class="resource-link">https://docs.openzeppelin.com/contracts/4.x/erc721</a>
+            <div class="resource-content">学习内容: Token标准，ERC721/1155</div>
+            <div class="resource-comment">这两个官方文档都写的不错，不仅解释了Token Standard的概念，各个标准之间的区别，而且列出了标准中包含的Method和Event，并给出示例代码让新手学习</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">项目学习</div>
+              <div class="rating rating-90">90分</div>
+            </div>
+            <div class="resource-name">Arweave官方文档+白皮书</div>
+            <a href="https://arwiki.wiki/#/en/karma" target="_blank" class="resource-link">https://arwiki.wiki/#/en/karma</a>
+            <div class="resource-content">学习内容: 去中心化存储项目</div>
+            <div class="resource-comment">Arweave是最让我喜欢的项目，技术有意思且难，白皮书+官方的技术文档也写的非常不错，推荐一看。</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- DeFi生态与技术 -->
+      <div class="topic">
+        <div class="topic-header">DeFi生态与技术</div>
+        <div class="topic-content">
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">视频教程</div>
+              <div class="rating rating-90">90分</div>
+            </div>
+            <div class="resource-name">DeFi Mooc课程</div>
+            <a href="https://www.youtube.com/watch?v=j_Gf7E1vAhE" target="_blank" class="resource-link">https://www.youtube.com/watch?v=j_Gf7E1vAhE</a>
+            <div class="resource-content">学习内容: Lecture 1: DeFi基础概念，生态 & Lecture 4: 传统金融知识</div>
+            <div class="resource-comment">这个课程的教学节奏很快，拿第一讲来说，短短45分钟介绍了DeFi几乎所有基础概念，以及整个DeFi生态。第四讲介绍了传统金融知识，也是信息量巨大。所以这两讲其实2h左右，但课后需要花很多的时间再去消化和搜索相关的知识，是比较费劲的。第四讲之后的内容讲的比较深，介绍了预言机、借贷、衍生品等比较复杂的内容，这周没来得及进一步学习，这个坑以后再填吧。推荐想要了解DeFi概念的朋友去看这个课。</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">项目文档</div>
+              <div class="rating rating-70">70分</div>
+            </div>
+            <div class="resource-name">Uniswap官网</div>
+            <a href="https://docs.uniswap.org/" target="_blank" class="resource-link">https://docs.uniswap.org/</a>
+            <div class="resource-content">学习内容: 技术文档，V1/V2/V3白皮书</div>
+            <div class="resource-comment">周末花了大量时间在阅读Uniswap白皮书上，说实话有点难懂，v1还算小白友好，大部分内容在介绍概念上。但v2 v3的白皮书，介绍新版的改进时，引入了大量的数学公式，需要花时间去思考，有点难懂</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">官方文档</div>
+              <div class="rating rating-40">40分</div>
+            </div>
+            <div class="resource-name">以太坊官方文档</div>
+            <a href="https://ethereum.org/en/developers/docs/" target="_blank" class="resource-link">https://ethereum.org/en/developers/docs/</a>
+            <div class="resource-content">学习内容: DeFi概念部分</div>
+            <div class="resource-comment">一开始找学习资料的时候，我先是去看的各种官方文档，Ethereum/Uniswap等，想看看这些官网有没有基础概念方面的介绍。之后发现官方文档对于DeFi都只是泛泛而谈，根本学不到什么，也了解不了全面的概念。这里就不推荐大家去各种官方文档搜索基础概念了</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Web3 Go后端开发与存储技术 -->
+      <div class="topic">
+        <div class="topic-header">Web3 Go后端开发与存储技术</div>
+        <div class="topic-content">
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">Go语言以太坊开发</div>
+              <div class="rating rating-90">90分</div>
+            </div>
+            <div class="resource-name">Building Ethereum Dapps with Go</div>
+            <a href="https://goethereumbook.org/en/" target="_blank" class="resource-link">https://goethereumbook.org/en/</a>
+            <div class="resource-content">学习内容: web3相关的go后端开发</div>
+            <div class="resource-comment">我平时工作就是web3相关的go开发，所以对这块还算了解。把goethereumbook的内容再动手写了一遍</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">区块链浏览器工具</div>
+              <div class="rating rating-90">90分</div>
+            </div>
+            <div class="resource-name">Etherscan</div>
+            <a href="https://etherscan.io/" target="_blank" class="resource-link">https://etherscan.io/</a>
+            <div class="resource-content">学习内容: 以太坊区块链浏览器的使用技巧</div>
+            <div class="resource-comment">一直感觉对etherscan不是很会用，找了一些文章和youtube，学习了一下etherscan的基本使用。感觉还是很必要的。</div>
+          </div>
+          
+          <div class="resource">
+            <div class="resource-header">
+              <div class="resource-type">去中心化存储技术</div>
+              <div class="rating rating-90">90分</div>
+            </div>
+            <div class="resource-name">IPFS & Filecoin</div>
+            <a href="https://github.com/ipfs/ipfs" target="_blank" class="resource-link">https://github.com/ipfs/ipfs</a>
+            <a href="https://filecoin.io/filecoin.pdf" target="_blank" class="resource-link">https://filecoin.io/filecoin.pdf</a>
+            <div class="resource-content">学习内容: 去中心化存储系统原理和实现</div>
+            <div class="resource-comment">这周选了我很喜欢的存储方向进行学习，从IPFS到FIL到Powergate。因为对去中心化存储不了解，看白皮书花了很多时间，把里面的技术栈都去学习了一下。之后抽个时间再仔细整理一下这块知识。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>区块链学习导航站 © 2025 | 持续更新中...</p>
+    </footer>
+  </div>
+</body>
+</html>
+1 分钟前
+区块链学习资源分享 - Monica
+
+解释
